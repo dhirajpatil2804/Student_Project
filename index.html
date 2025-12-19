@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Disha Computer Institute | Student Projects</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--red:#e10600}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins;background:#000;color:#fff}
+
+/* HEADER */
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:15px 20px;
+}
+header img{width:120px}
+.admin-icon{
+ cursor:pointer;
+ background:#111;
+ padding:10px;
+ border-radius:50%;
+}
+
+/* SEARCH & FILTER */
+.top-controls{
+ text-align:center;
+ padding:15px;
+}
+.top-controls input,.top-controls select{
+ padding:12px;
+ border-radius:10px;
+ border:none;
+ margin:5px;
+ width:220px;
+}
+
+/* PROJECTS */
+.projects{
+ max-width:1200px;
+ margin:auto;
+ padding:20px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:25px;
+}
+.card{
+ background:#111;
+ padding:25px;
+ border-radius:20px;
+ transition:.4s;
+}
+.card:hover{transform:translateY(-10px)}
+.student{color:var(--red);font-weight:700;font-size:18px}
+.btn{
+ display:block;
+ margin-top:10px;
+ padding:10px;
+ text-align:center;
+ background:var(--red);
+ color:#fff;
+ text-decoration:none;
+ border-radius:25px;
+}
+.btn.secondary{background:#444}
+
+/* MODAL */
+.modal{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.7);
+ display:none;
+ justify-content:center;
+ align-items:center;
+}
+.modal-content{
+ background:#111;
+ padding:25px;
+ border-radius:20px;
+ width:90%;
+ max-width:350px;
+}
+
+/* ADMIN PANEL */
+.admin-panel{
+ max-width:450px;
+ margin:20px auto;
+ background:#111;
+ padding:20px;
+ border-radius:20px;
+ display:none;
+}
+
+input,select,button{
+ width:100%;
+ padding:10px;
+ margin:6px 0;
+ border-radius:8px;
+ border:none;
+}
+button{background:var(--red);color:#fff;font-weight:600}
+</style>
+</head>
+
+<body>
+
+<header>
+ <img src="logo.png">
+ <div class="admin-icon" onclick="openLogin()">👤</div>
+</header>
+
+<div class="top-controls">
+ <input id="search" placeholder="🔍 Search Student">
+ <select id="courseFilter">
+  <option value="all">All Courses</option>
+ </select>
+</div>
+
+<div class="projects" id="projectList"></div>
+
+<!-- ADMIN LOGIN -->
+<div class="modal" id="loginModal">
+ <div class="modal-content">
+  <h3>🔐 Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Password">
+  <button onclick="login()">Login</button>
+ </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+ <h3>Add / Edit Project</h3>
+
+ <input id="student" placeholder="Student Name">
+ <select id="course" onchange="loadSubtypes()"></select>
+ <select id="subtype"></select>
+ <input id="project" placeholder="Project Title">
+ <input id="projectLink" placeholder="Project Live Link (https://...)">
+
+ <button onclick="saveProject()">Save Project</button>
+</div>
+
+<script>
+const ADMIN_PASSWORD="disha@123";
+
+/* COURSE STRUCTURE */
+const COURSES={
+ "Tally Prime":["Accounting","GST","Payroll"],
+ "Excel Master":["Basic","Advanced","Dashboard"],
+ "Graphic Design":["Photoshop","CorelDraw","Illustrator","Canva"],
+ "Web Development":["HTML","CSS","JavaScript","All Combined"],
+ "Programming":["Java","Python","JavaScript","PHP","C","C++","C#"],
+ "AutoCAD":["Civil","Mechanical","Electrical"],
+ "Google SketchUp":["Interior","Exterior"],
+ "Full Stack":["MERN","MEAN","Java Full Stack"],
+ "Data Analyst":["Excel","Power BI","SQL","Python"],
+ "MS Office":["Word","Excel","PowerPoint","Outlook"],
+ "Digital Marketing":["SEO","Social Media","Google Ads"],
+ "Video Editing":["Premiere Pro","After Effects","CapCut"]
+};
+
+let projects=JSON.parse(localStorage.getItem("dishaProjects"))||[];
+let editId=null;
+
+/* LOAD COURSE DROPDOWNS */
+for(let c in COURSES){
+ courseFilter.innerHTML+=`<option>${c}</option>`;
+ course.innerHTML+=`<option>${c}</option>`;
+}
+loadSubtypes();
+
+/* UI */
+function openLogin(){loginModal.style.display="flex"}
+function login(){
+ if(adminPass.value===ADMIN_PASSWORD){
+  loginModal.style.display="none";
+  adminPanel.style.display="block";
+ } else alert("Wrong password");
+}
+
+function loadSubtypes(){
+ subtype.innerHTML="";
+ COURSES[course.value].forEach(s=>{
+  subtype.innerHTML+=`<option>${s}</option>`;
+ });
+}
+
+/* SAVE PROJECT */
+function saveProject(){
+ if(!student.value||!project.value||!projectLink.value){
+  alert("Fill all fields");
+  return;
+ }
+
+ if(editId){
+  let p=projects.find(x=>x.id===editId);
+  Object.assign(p,{
+   student:student.value,
+   course:course.value,
+   subtype:subtype.value,
+   project:project.value,
+   projectLink:projectLink.value
+  });
+  editId=null;
+ }else{
+  projects.push({
+   id:Date.now(),
+   student:student.value,
+   course:course.value,
+   subtype:subtype.value,
+   project:project.value,
+   projectLink:projectLink.value
+  });
+ }
+
+ localStorage.setItem("dishaProjects",JSON.stringify(projects));
+ render();
+ student.value=project.value=projectLink.value="";
+}
+
+/* RENDER */
+function render(){
+ projectList.innerHTML="";
+ let s=search.value.toLowerCase();
+ let c=courseFilter.value;
+
+ projects.filter(p=>
+  p.student.toLowerCase().includes(s) &&
+  (c==="all"||p.course===c)
+ ).forEach(p=>{
+  projectList.innerHTML+=`
+   <div class="card">
+    <div class="student">${p.student}</div>
+    <div>${p.course} → ${p.subtype}</div>
+    <div>${p.project}</div>
+
+    <a class="btn" target="_blank" href="profile.html?id=${p.id}">
+      View Profile
+    </a>
+
+    <a class="btn secondary" target="_blank" href="${p.projectLink}">
+      Show Project
+    </a>
+   </div>`;
+ });
+}
+search.oninput=courseFilter.onchange=render;
+render();
+</script>
+
+</body>
+</html>

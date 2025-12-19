@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+ margin:0;
+ background:#000;
+ color:#fff;
+ font-family:Poppins;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ height:100vh;
+}
+.card{
+ background:#111;
+ padding:30px;
+ border-radius:20px;
+ width:90%;
+ max-width:400px;
+ box-shadow:0 0 25px rgba(225,6,0,.6);
+}
+h2{color:#e10600}
+.btn{
+ display:block;
+ margin-top:15px;
+ padding:10px;
+ text-align:center;
+ background:#e10600;
+ color:#fff;
+ text-decoration:none;
+ border-radius:25px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+ <h2 id="student"></h2>
+ <p><b>Course:</b> <span id="course"></span></p>
+ <p><b>Specialization:</b> <span id="subtype"></span></p>
+ <p><b>Project:</b> <span id="project"></span></p>
+
+ <a id="projectBtn" target="_blank" class="btn">Show Project</a>
+</div>
+
+<script>
+let id=new URLSearchParams(location.search).get("id");
+let data=JSON.parse(localStorage.getItem("dishaProjects"))||[];
+let p=data.find(x=>x.id==id);
+
+if(p){
+ student.innerText=p.student;
+ course.innerText=p.course;
+ subtype.innerText=p.subtype;
+ project.innerText=p.project;
+ projectBtn.href=p.projectLink;
+}
+</script>
+
+</body>
+</html>
