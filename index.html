@@ -8,39 +8,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{--red:#e10600}
+:root{
+ --bg:#000;
+ --card:#111;
+ --text:#fff;
+ --muted:#aaa;
+ --red:#e10600;
+}
+.light{
+ --bg:#f4f4f4;
+ --card:#fff;
+ --text:#111;
+ --muted:#555;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Poppins;background:#000;color:#fff}
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Poppins;
+ transition:.4s;
+}
 
 /* HEADER */
 header{
  display:flex;
  justify-content:space-between;
  align-items:center;
- padding:15px 20px;
+ padding:15px 25px;
+ animation:slideDown .5s ease;
 }
-header img{width:120px}
-.admin-icon{
+.header-right{display:flex;gap:12px}
+.icon{
  cursor:pointer;
- background:#111;
- padding:10px;
+ padding:8px 12px;
  border-radius:50%;
+ background:var(--card);
+ transition:.3s;
 }
+.icon:hover{background:var(--red);color:#fff}
 
-/* SEARCH & FILTER */
-.top-controls{
- text-align:center;
+/* CONTROLS */
+.controls{
+ display:flex;
+ justify-content:center;
+ gap:10px;
  padding:15px;
+ flex-wrap:wrap;
+ animation:fadeIn .6s ease;
 }
-.top-controls input,.top-controls select{
- padding:12px;
+.controls input,.controls select{
+ padding:10px 12px;
  border-radius:10px;
  border:none;
- margin:5px;
- width:220px;
+ min-width:180px;
 }
 
-/* PROJECTS */
+/* COUNT */
+.count{text-align:center;font-size:14px;color:var(--muted)}
+
+/* PROJECT GRID */
 .projects{
  max-width:1200px;
  margin:auto;
@@ -48,28 +75,38 @@ header img{width:120px}
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
  gap:25px;
+ animation:fadeInUp .7s ease;
 }
 .card{
- background:#111;
- padding:25px;
- border-radius:20px;
+ background:var(--card);
+ padding:22px;
+ border-radius:22px;
  transition:.4s;
 }
-.card:hover{transform:translateY(-10px)}
-.student{color:var(--red);font-weight:700;font-size:18px}
+.card:hover{
+ transform:translateY(-10px);
+ box-shadow:0 0 30px rgba(225,6,0,.3);
+}
+.card h3{color:var(--red);margin:0}
+.meta{color:var(--muted);margin:6px 0}
+
+/* BUTTONS */
 .btn{
- display:block;
+ display:inline-block;
  margin-top:10px;
- padding:10px;
- text-align:center;
+ padding:8px 14px;
  background:var(--red);
  color:#fff;
+ border-radius:20px;
  text-decoration:none;
- border-radius:25px;
+ font-size:14px;
+ transition:.3s;
+ cursor:pointer;
 }
-.btn.secondary{background:#444}
+.btn:hover{transform:scale(1.05)}
+.btn.secondary{background:#555}
 
-/* MODAL */
+/* MODALS */
 .modal{
  position:fixed;
  inset:0;
@@ -79,24 +116,14 @@ header img{width:120px}
  align-items:center;
 }
 .modal-content{
- background:#111;
+ background:var(--card);
  padding:25px;
  border-radius:20px;
  width:90%;
- max-width:350px;
+ max-width:400px;
+ animation:scaleIn .3s ease;
 }
-
-/* ADMIN PANEL */
-.admin-panel{
- max-width:450px;
- margin:20px auto;
- background:#111;
- padding:20px;
- border-radius:20px;
- display:none;
-}
-
-input,select,button{
+.modal-content input,select,button{
  width:100%;
  padding:10px;
  margin:6px 0;
@@ -104,51 +131,90 @@ input,select,button{
  border:none;
 }
 button{background:var(--red);color:#fff;font-weight:600}
+
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1}}
 </style>
 </head>
 
 <body>
 
 <header>
- <img src="logo.png">
- <div class="admin-icon" onclick="openLogin()">👤</div>
+ <h3>Disha Student Projects</h3>
+ <div class="header-right">
+  <div class="icon" onclick="toggleTheme()">🌗</div>
+  <div class="icon" onclick="openLogin()">👤</div>
+ </div>
 </header>
 
-<div class="top-controls">
- <input id="search" placeholder="🔍 Search Student">
+<!-- SEARCH / FILTER / SORT -->
+<div class="controls">
+ <input id="search" placeholder="🔍 Search student or project">
  <select id="courseFilter">
   <option value="all">All Courses</option>
  </select>
+ <select id="sort">
+  <option value="latest">Latest</option>
+  <option value="az">A–Z</option>
+ </select>
 </div>
+
+<div class="count" id="count"></div>
 
 <div class="projects" id="projectList"></div>
 
-<!-- ADMIN LOGIN -->
+<!-- LOGIN -->
 <div class="modal" id="loginModal">
  <div class="modal-content">
-  <h3>🔐 Admin Login</h3>
+  <h3>Admin Login</h3>
   <input type="password" id="adminPass" placeholder="Password">
   <button onclick="login()">Login</button>
  </div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
- <h3>Add / Edit Project</h3>
+<!-- DASHBOARD -->
+<div class="modal" id="dashboardModal">
+ <div class="modal-content">
+  <h3>Admin Dashboard</h3>
+  <button onclick="openAdd()">➕ Add Project</button>
+  <button onclick="showManage()">✏️ Edit / Delete Projects</button>
+  <button onclick="logout()" style="background:#444">🚪 Logout</button>
+ </div>
+</div>
 
- <input id="student" placeholder="Student Name">
- <select id="course" onchange="loadSubtypes()"></select>
- <select id="subtype"></select>
- <input id="project" placeholder="Project Title">
- <input id="projectLink" placeholder="Project Live Link (https://...)">
+<!-- ADD / EDIT -->
+<div class="modal" id="adminModal">
+ <div class="modal-content">
+  <h3 id="formTitle">Add Project</h3>
 
- <button onclick="saveProject()">Save Project</button>
+  <input id="student" placeholder="Student Name">
+  <select id="course" onchange="loadSubtypes()"></select>
+  <select id="subtype"></select>
+  <input id="project" placeholder="Project Title">
+  <input id="projectLink" placeholder="Live Project URL">
+
+  <button onclick="saveProject()">Save</button>
+ </div>
 </div>
 
 <script>
+/* THEME */
+function toggleTheme(){
+ document.body.classList.toggle("light");
+ localStorage.setItem("theme",
+  document.body.classList.contains("light")?"light":"dark");
+}
+if(localStorage.getItem("theme")==="light"){
+ document.body.classList.add("light");
+}
+
+/* CONFIG */
+const API_URL="https://script.google.com/macros/s/AKfycbwYHntIvgXgRFT9DDSm9e75Ny3dZ7GgMJDirzjYmFaGmtAjIMFx8B7_lefEPBSpGsTG/exec";
 const ADMIN_PASSWORD="disha@123";
 
-/* COURSE STRUCTURE */
 const COURSES={
  "Tally Prime":["Accounting","GST","Payroll"],
  "Excel Master":["Basic","Advanced","Dashboard"],
@@ -164,93 +230,137 @@ const COURSES={
  "Video Editing":["Premiere Pro","After Effects","CapCut"]
 };
 
-let projects=JSON.parse(localStorage.getItem("dishaProjects"))||[];
-let editId=null;
+let projects=[], editId=null, isAdmin=false;
 
-/* LOAD COURSE DROPDOWNS */
+/* LOAD DROPDOWNS */
 for(let c in COURSES){
- courseFilter.innerHTML+=`<option>${c}</option>`;
  course.innerHTML+=`<option>${c}</option>`;
+ courseFilter.innerHTML+=`<option>${c}</option>`;
 }
 loadSubtypes();
 
-/* UI */
-function openLogin(){loginModal.style.display="flex"}
-function login(){
- if(adminPass.value===ADMIN_PASSWORD){
-  loginModal.style.display="none";
-  adminPanel.style.display="block";
- } else alert("Wrong password");
-}
-
-function loadSubtypes(){
- subtype.innerHTML="";
- COURSES[course.value].forEach(s=>{
-  subtype.innerHTML+=`<option>${s}</option>`;
+/* FETCH */
+function loadProjects(){
+ fetch(API_URL).then(r=>r.json()).then(d=>{
+  projects=d;
+  render();
  });
 }
-
-/* SAVE PROJECT */
-function saveProject(){
- if(!student.value||!project.value||!projectLink.value){
-  alert("Fill all fields");
-  return;
- }
-
- if(editId){
-  let p=projects.find(x=>x.id===editId);
-  Object.assign(p,{
-   student:student.value,
-   course:course.value,
-   subtype:subtype.value,
-   project:project.value,
-   projectLink:projectLink.value
-  });
-  editId=null;
- }else{
-  projects.push({
-   id:Date.now(),
-   student:student.value,
-   course:course.value,
-   subtype:subtype.value,
-   project:project.value,
-   projectLink:projectLink.value
-  });
- }
-
- localStorage.setItem("dishaProjects",JSON.stringify(projects));
- render();
- student.value=project.value=projectLink.value="";
-}
+loadProjects();
 
 /* RENDER */
 function render(){
  projectList.innerHTML="";
- let s=search.value.toLowerCase();
- let c=courseFilter.value;
+ let q=search.value.toLowerCase();
+ let cf=courseFilter.value;
+ let list=[...projects];
 
- projects.filter(p=>
-  p.student.toLowerCase().includes(s) &&
-  (c==="all"||p.course===c)
- ).forEach(p=>{
+ if(sort.value==="az"){
+  list.sort((a,b)=>a.project.localeCompare(b.project));
+ }else{
+  list.sort((a,b)=>b.id-a.id);
+ }
+
+ let filtered=list.filter(p=>
+  (p.student.toLowerCase().includes(q) ||
+   p.project.toLowerCase().includes(q)) &&
+  (cf==="all" || p.course===cf)
+ );
+
+ count.innerText=`Showing ${filtered.length} project(s)`;
+
+ filtered.forEach(p=>{
   projectList.innerHTML+=`
    <div class="card">
-    <div class="student">${p.student}</div>
-    <div>${p.course} → ${p.subtype}</div>
-    <div>${p.project}</div>
+    <h3>${p.project}</h3>
+    <div class="meta">${p.student}</div>
+    <div class="meta">${p.course} • ${p.subtype}</div>
 
-    <a class="btn" target="_blank" href="profile.html?id=${p.id}">
-      View Profile
-    </a>
+    <a class="btn" href="${p.projectLink}" target="_blank">View Project</a>
 
-    <a class="btn secondary" target="_blank" href="${p.projectLink}">
-      Show Project
-    </a>
+    ${isAdmin?`
+     <div>
+      <a class="btn secondary" onclick="editProject(${p.id})">Edit</a>
+      <a class="btn secondary" onclick="deleteProject(${p.id})">Delete</a>
+     </div>`:""}
    </div>`;
  });
 }
-search.oninput=courseFilter.onchange=render;
-render();
+search.oninput=courseFilter.onchange=sort.onchange=render;
+
+/* LOGIN */
+function openLogin(){loginModal.style.display="flex"}
+function login(){
+ if(adminPass.value===ADMIN_PASSWORD){
+  isAdmin=true;
+  loginModal.style.display="none";
+  dashboardModal.style.display="flex";
+  render();
+ }else alert("Wrong password");
+}
+
+/* DASHBOARD */
+function openAdd(){
+ editId=null;
+ formTitle.innerText="Add Project";
+ student.value=project.value=projectLink.value="";
+ dashboardModal.style.display="none";
+ adminModal.style.display="flex";
+}
+function showManage(){
+ dashboardModal.style.display="none";
+ render();
+}
+function logout(){
+ isAdmin=false;
+ dashboardModal.style.display="none";
+ render();
+}
+
+/* SUBTYPES */
+function loadSubtypes(){
+ subtype.innerHTML="";
+ COURSES[course.value]?.forEach(s=>{
+  subtype.innerHTML+=`<option>${s}</option>`;
+ });
+}
+
+/* SAVE */
+function saveProject(){
+ fetch(API_URL,{
+  method:"POST",
+  body:JSON.stringify({
+   action:editId?"update":"create",
+   id:editId,
+   student:student.value,
+   course:course.value,
+   subtype:subtype.value,
+   project:project.value,
+   projectLink:projectLink.value
+  })
+ }).then(()=>{adminModal.style.display="none";loadProjects()});
+}
+
+/* EDIT */
+function editProject(id){
+ const p=projects.find(x=>x.id==id);
+ editId=id;
+ student.value=p.student;
+ course.value=p.course;
+ loadSubtypes();
+ subtype.value=p.subtype;
+ project.value=p.project;
+ projectLink.value=p.projectLink;
+ formTitle.innerText="Edit Project";
+ adminModal.style.display="flex";
+}
+
+/* DELETE */
+function deleteProject(id){
+ if(!confirm("Delete this project?")) return;
+ fetch(API_URL,{method:"POST",body:JSON.stringify({action:"delete",id})})
+ .then(loadProjects);
+}
 </script>
 
 </body>
