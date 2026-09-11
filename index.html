@@ -1,368 +1,2694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta name="google-site-verification" content="xyAXTdh1Nnv_w8gsp3aVrpuzLB1mIEWmVh4kaxVTNUE" />
+<meta name="google-site-verification" content="xyAXTdh1Nnv_w8gsp3aVrpuzLB1mIEWmVh4kaxVTNUE" />
+
 <meta charset="UTF-8">
-<title>Disha Computer Institute | Student Projects</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Disha Computer Institute | Student Projects</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+
 :root{
- --bg:#000;
- --card:#111;
- --text:#fff;
- --muted:#aaa;
- --red:#e10600;
+    --bg:#050505;
+    --bg-secondary:#0b0b0d;
+    --card:#111114;
+    --card-hover:#17171b;
+
+    --text:#ffffff;
+    --muted:#9999a3;
+
+    --red:#e10600;
+    --red-dark:#b80400;
+    --red-light:#ff2a24;
+
+    --border:rgba(255,255,255,.08);
+    --border-hover:rgba(225,6,0,.45);
+
+    --shadow:0 15px 45px rgba(0,0,0,.35);
+    --shadow-red:0 15px 45px rgba(225,6,0,.18);
+
+    --radius:20px;
+
+    --header-bg:rgba(5,5,5,.78);
 }
-.light{
- --bg:#f4f4f4;
- --card:#fff;
- --text:#111;
- --muted:#555;
+
+body.light{
+
+    --bg:#f5f6f8;
+    --bg-secondary:#ffffff;
+    --card:#ffffff;
+    --card-hover:#fafafa;
+
+    --text:#111216;
+    --muted:#62656d;
+
+    --border:rgba(0,0,0,.08);
+    --border-hover:rgba(225,6,0,.35);
+
+    --shadow:0 15px 40px rgba(0,0,0,.08);
+    --shadow-red:0 15px 40px rgba(225,6,0,.12);
+
+    --header-bg:rgba(245,246,248,.85);
 }
-*{box-sizing:border-box}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
- margin:0;
- background:var(--bg);
- color:var(--text);
- font-family:Poppins;
- transition:.4s;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 0%,rgba(225,6,0,.09),transparent 25%),
+        radial-gradient(circle at 90% 15%,rgba(225,6,0,.06),transparent 25%),
+        var(--bg);
+
+    color:var(--text);
+    font-family:Inter,Arial,sans-serif;
+
+    transition:
+        background .35s ease,
+        color .35s ease;
 }
 
-/* HEADER */
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+
+/* =========================================================
+   BACKGROUND DECORATION
+========================================================= */
+
+.background-glow{
+    position:fixed;
+    width:450px;
+    height:450px;
+
+    border-radius:50%;
+
+    background:rgba(225,6,0,.055);
+
+    filter:blur(100px);
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+.glow-one{
+    top:-200px;
+    left:-180px;
+}
+
+.glow-two{
+    right:-220px;
+    top:35%;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:15px 25px;
- animation:slideDown .5s ease;
-}
-.header-right{display:flex;gap:12px}
-.icon{
- cursor:pointer;
- padding:8px 12px;
- border-radius:50%;
- background:var(--card);
- transition:.3s;
-}
-.icon:hover{background:var(--red);color:#fff}
 
-/* CONTROLS */
+    position:sticky;
+    top:0;
+
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:14px clamp(18px,4vw,55px);
+
+    background:var(--header-bg);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+
+    animation:slideDown .6s ease;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-wrapper{
+
+    width:52px;
+    height:52px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    padding:5px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.18);
+
+    transition:.3s ease;
+}
+
+.brand-logo{
+
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:contain;
+
+    object-position:center;
+}
+
+.logo-wrapper:hover{
+
+    transform:scale(1.04);
+
+    border-color:rgba(225,6,0,.35);
+
+    box-shadow:
+        0 8px 25px rgba(225,6,0,.18);
+}
+
+.brand-text h1{
+
+    font-family:Poppins,sans-serif;
+
+    font-size:18px;
+    font-weight:800;
+
+    letter-spacing:-.4px;
+}
+
+.brand-text span{
+
+    display:block;
+
+    margin-top:1px;
+
+    font-size:11px;
+
+    color:var(--muted);
+
+    font-weight:500;
+}
+
+.header-right{
+    display:flex;
+    gap:9px;
+}
+
+.icon-btn{
+
+    width:42px;
+    height:42px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    transition:.25s ease;
+}
+
+.icon-btn:hover{
+
+    background:var(--red);
+    border-color:var(--red);
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 22px rgba(225,6,0,.25);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        clamp(45px,7vw,80px)
+        20px
+        25px;
+
+    text-align:center;
+
+    animation:fadeInUp .7s ease;
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+    gap:8px;
+
+    padding:7px 13px;
+
+    border:1px solid rgba(225,6,0,.25);
+
+    border-radius:30px;
+
+    background:rgba(225,6,0,.08);
+
+    color:#ff4a45;
+
+    font-size:12px;
+    font-weight:700;
+
+    margin-bottom:17px;
+}
+
+.badge-dot{
+
+    width:7px;
+    height:7px;
+
+    background:var(--red);
+
+    border-radius:50%;
+
+    box-shadow:0 0 12px var(--red);
+}
+
+.hero h2{
+
+    font-family:Poppins,sans-serif;
+
+    font-size:
+        clamp(30px,5vw,54px);
+
+    line-height:1.08;
+
+    letter-spacing:-2px;
+
+    font-weight:800;
+
+    max-width:850px;
+
+    margin:auto;
+}
+
+.hero h2 span{
+    color:var(--red);
+}
+
+.hero p{
+
+    max-width:650px;
+
+    margin:17px auto 0;
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls-wrapper{
+
+    max-width:1200px;
+
+    margin:0 auto;
+
+    padding:0 20px;
+}
+
 .controls{
- display:flex;
- justify-content:center;
- gap:10px;
- padding:15px;
- flex-wrap:wrap;
- animation:fadeIn .6s ease;
-}
-.controls input,.controls select{
- padding:10px 12px;
- border-radius:10px;
- border:none;
- min-width:180px;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(220px,1fr)
+        210px
+        150px;
+
+    gap:12px;
+
+    padding:16px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:var(--shadow);
+
+    animation:fadeInUp .8s ease;
 }
 
-/* COUNT */
-.count{text-align:center;font-size:14px;color:var(--muted)}
+.input-box{
+    position:relative;
+}
 
-/* PROJECT GRID */
+.input-icon{
+
+    position:absolute;
+
+    left:14px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--muted);
+
+    pointer-events:none;
+}
+
+.controls input,
+.controls select{
+
+    width:100%;
+
+    height:48px;
+
+    padding:0 14px;
+
+    border-radius:13px;
+
+    border:1px solid var(--border);
+
+    outline:none;
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+    font-size:13px;
+
+    transition:.25s ease;
+}
+
+.controls input{
+    padding-left:42px;
+}
+
+.controls input:focus,
+.controls select:focus{
+
+    border-color:var(--red);
+
+    box-shadow:
+        0 0 0 3px rgba(225,6,0,.09);
+}
+
+.controls select{
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   COUNT BAR
+========================================================= */
+
+.count-row{
+
+    max-width:1200px;
+
+    margin:0 auto;
+
+    padding:17px 20px 3px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.count{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    font-weight:600;
+}
+
+.count strong{
+    color:var(--text);
+}
+
+
+/* =========================================================
+   PROJECT GRID
+========================================================= */
+
 .projects{
- max-width:1200px;
- margin:auto;
- padding:20px;
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
- gap:25px;
- animation:fadeInUp .7s ease;
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        17px 20px
+        60px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(280px,1fr));
+
+    gap:18px;
 }
+
+
+/* =========================================================
+   PROJECT CARD
+========================================================= */
+
 .card{
- background:var(--card);
- padding:22px;
- border-radius:22px;
- transition:.4s;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:23px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+
+    animation:cardIn .5s ease both;
 }
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        var(--red),
+        transparent
+    );
+
+    opacity:0;
+
+    transition:.3s;
+}
+
 .card:hover{
- transform:translateY(-10px);
- box-shadow:0 0 30px rgba(225,6,0,.3);
-}
-.card h3{color:var(--red);margin:0}
-.meta{color:var(--muted);margin:6px 0}
 
-/* BUTTONS */
-.btn{
- display:inline-block;
- margin-top:10px;
- padding:8px 14px;
- background:var(--red);
- color:#fff;
- border-radius:20px;
- text-decoration:none;
- font-size:14px;
- transition:.3s;
- cursor:pointer;
-}
-.btn:hover{transform:scale(1.05)}
-.btn.secondary{background:#555}
+    transform:translateY(-7px);
 
-/* MODALS */
+    border-color:var(--border-hover);
+
+    box-shadow:
+        var(--shadow-red);
+}
+
+.card:hover::before{
+    opacity:1;
+}
+
+
+/* CARD TOP */
+
+.card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:18px;
+}
+
+.project-number{
+
+    width:39px;
+    height:39px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:rgba(225,6,0,.09);
+
+    border:1px solid rgba(225,6,0,.16);
+
+    color:var(--red-light);
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+.course-badge{
+
+    padding:6px 9px;
+
+    border-radius:8px;
+
+    background:var(--bg-secondary);
+
+    border:1px solid var(--border);
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+/* CARD CONTENT */
+
+.card h3{
+
+    font-family:Poppins,sans-serif;
+
+    color:var(--text);
+
+    font-size:18px;
+
+    line-height:1.35;
+
+    margin-bottom:8px;
+
+    letter-spacing:-.3px;
+}
+
+.student-name{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-bottom:14px;
+}
+
+.student-name span{
+    color:var(--red);
+}
+
+.meta{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:6px 9px;
+
+    background:var(--bg-secondary);
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    font-weight:600;
+
+    margin-bottom:18px;
+}
+
+
+/* CARD FOOTER */
+
+.card-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding-top:15px;
+
+    border-top:1px solid var(--border);
+}
+
+.view-btn{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:7px;
+
+    min-height:39px;
+
+    padding:8px 13px;
+
+    background:linear-gradient(
+        135deg,
+        var(--red),
+        var(--red-dark)
+    );
+
+    color:#fff;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    transition:.25s ease;
+
+    box-shadow:
+        0 6px 17px rgba(225,6,0,.16);
+}
+
+.view-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 9px 22px rgba(225,6,0,.3);
+}
+
+.admin-actions{
+
+    display:flex;
+
+    gap:6px;
+}
+
+.small-btn{
+
+    width:39px;
+    height:39px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid var(--border);
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.small-btn:hover{
+
+    background:var(--red);
+
+    border-color:var(--red);
+
+    color:#fff;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state{
+
+    grid-column:1/-1;
+
+    padding:65px 20px;
+
+    text-align:center;
+
+    border:1px dashed var(--border);
+
+    border-radius:22px;
+
+    background:var(--card);
+}
+
+.empty-icon{
+
+    width:60px;
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 15px;
+
+    border-radius:18px;
+
+    background:rgba(225,6,0,.08);
+
+    font-size:25px;
+}
+
+.empty-state h3{
+
+    font-family:Poppins,sans-serif;
+
+    margin-bottom:6px;
+}
+
+.empty-state p{
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
 .modal{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.7);
- display:none;
- justify-content:center;
- align-items:center;
-}
-.modal-content{
- background:var(--card);
- padding:25px;
- border-radius:20px;
- width:90%;
- max-width:400px;
- animation:scaleIn .3s ease;
-}
-.modal-content input,select,button{
- width:100%;
- padding:10px;
- margin:6px 0;
- border-radius:8px;
- border:none;
-}
-button{background:var(--red);color:#fff;font-weight:600}
 
-/* ANIMATIONS */
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
-@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1}}
+    position:fixed;
+
+    inset:0;
+
+    z-index:500;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(8px);
+
+    animation:fadeIn .2s ease;
+}
+
+.modal-content{
+
+    width:100%;
+
+    max-width:430px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    padding:27px;
+
+    border-radius:24px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5);
+
+    animation:modalIn .3s ease;
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:20px;
+}
+
+.modal-header h3{
+
+    font-family:Poppins,sans-serif;
+
+    font-size:20px;
+}
+
+.modal-header p{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:3px;
+}
+
+.close-btn{
+
+    width:34px;
+    height:34px;
+
+    border:1px solid var(--border);
+
+    background:var(--bg-secondary);
+
+    color:var(--muted);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:17px;
+}
+
+.close-btn:hover{
+
+    background:var(--red);
+    color:#fff;
+}
+
+
+/* FORM */
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+.modal-content input,
+.modal-content select{
+
+    width:100%;
+
+    height:46px;
+
+    padding:0 13px;
+
+    margin:0;
+
+    border-radius:11px;
+
+    border:1px solid var(--border);
+
+    outline:none;
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+    font-size:13px;
+
+    transition:.2s;
+}
+
+.modal-content input:focus,
+.modal-content select:focus{
+
+    border-color:var(--red);
+
+    box-shadow:
+        0 0 0 3px rgba(225,6,0,.08);
+}
+
+.primary-btn{
+
+    width:100%;
+
+    min-height:46px;
+
+    margin-top:8px;
+
+    border:0;
+
+    border-radius:11px;
+
+    background:linear-gradient(
+        135deg,
+        var(--red),
+        var(--red-dark)
+    );
+
+    color:#fff;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(225,6,0,.25);
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard-buttons{
+
+    display:grid;
+
+    gap:10px;
+}
+
+.dashboard-btn{
+
+    width:100%;
+
+    min-height:49px;
+
+    border:1px solid var(--border);
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+    border-radius:12px;
+
+    text-align:left;
+
+    padding:0 15px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    font-size:13px;
+
+    transition:.25s;
+}
+
+.dashboard-btn:hover{
+
+    border-color:var(--red);
+
+    transform:translateX(3px);
+
+    background:rgba(225,6,0,.06);
+}
+
+.dashboard-btn.danger:hover{
+
+    background:rgba(225,6,0,.1);
+
+    color:#ff4a45;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    border-top:1px solid var(--border);
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+footer strong{
+    color:var(--red);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+
+    grid-column:1/-1;
+
+    padding:70px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.loader{
+
+    width:35px;
+    height:35px;
+
+    margin:0 auto 13px;
+
+    border:3px solid var(--border);
+
+    border-top-color:var(--red);
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    .controls{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .input-box{
+        grid-column:1/-1;
+    }
+}
+
+@media(max-width:560px){
+
+    header{
+
+        padding:12px 15px;
+    }
+
+.logo-wrapper{
+
+    width:43px;
+    height:43px;
+
+    padding:4px;
+
+    border-radius:10px;
+}
+
+    .brand-text h1{
+        font-size:15px;
+    }
+
+    .brand-text span{
+        font-size:9px;
+    }
+
+    .icon-btn{
+
+        width:38px;
+        height:38px;
+    }
+
+    .hero{
+
+        padding-top:42px;
+    }
+
+    .hero h2{
+
+        letter-spacing:-1.2px;
+    }
+
+    .hero p{
+        font-size:12px;
+    }
+
+    .controls{
+
+        grid-template-columns:1fr;
+        padding:12px;
+        border-radius:17px;
+    }
+
+    .input-box{
+        grid-column:auto;
+    }
+
+    .projects{
+
+        grid-template-columns:1fr;
+
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .count-row{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .modal-content{
+
+        padding:22px;
+
+        border-radius:20px;
+    }
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes fadeInUp{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes slideDown{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+        transform:scale(.94) translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+@keyframes cardIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
 </style>
 </head>
 
+
 <body>
 
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header>
- <h3>Disha Student Projects</h3>
- <div class="header-right">
-  <div class="icon" onclick="toggleTheme()">🌗</div>
-  <div class="icon" onclick="openLogin()">👤</div>
- </div>
+
+<div class="brand">
+
+    <div class="logo-wrapper">
+        <img
+            src="logo.png"
+            alt="Disha Computer Institute Logo"
+            class="brand-logo"
+        >
+    </div>
+
+    <div class="brand-text">
+
+        <h1>Disha Student Projects</h1>
+
+        <span>Disha Computer Institute</span>
+
+    </div>
+
+</div>
+
+
+    <div class="header-right">
+
+        <button
+            class="icon-btn"
+            onclick="toggleTheme()"
+            title="Toggle Theme"
+            aria-label="Toggle theme"
+        >
+            🌗
+        </button>
+
+        <button
+            class="icon-btn"
+            onclick="openLogin()"
+            title="Admin Login"
+            aria-label="Admin login"
+        >
+            👤
+        </button>
+
+    </div>
+
 </header>
 
-<!-- SEARCH / FILTER / SORT -->
-<div class="controls">
- <input id="search" placeholder="🔍 Search student or project">
- <select id="courseFilter">
-  <option value="all">All Courses</option>
- </select>
- <select id="sort">
-  <option value="latest">Latest</option>
-  <option value="az">A–Z</option>
- </select>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-badge">
+
+        <span class="badge-dot"></span>
+
+        STUDENT PROJECT SHOWCASE
+
+    </div>
+
+
+    <h2>
+        Explore What Our
+        <span>Students Create.</span>
+    </h2>
+
+
+    <p>
+        Discover innovative projects created by students
+        of Disha Computer Institute using the skills they
+        learned during their courses.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     SEARCH / FILTER
+===================================================== -->
+
+<div class="controls-wrapper">
+
+    <div class="controls">
+
+        <div class="input-box">
+
+            <span class="input-icon">🔍</span>
+
+            <input
+                id="search"
+                type="text"
+                placeholder="Search student or project..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <select id="courseFilter">
+
+            <option value="all">
+                All Courses
+            </option>
+
+        </select>
+
+
+        <select id="sort">
+
+            <option value="latest">
+                Latest
+            </option>
+
+            <option value="az">
+                A–Z
+            </option>
+
+        </select>
+
+    </div>
+
 </div>
 
-<div class="count" id="count"></div>
 
-<div class="projects" id="projectList"></div>
 
-<!-- LOGIN -->
-<div class="modal" id="loginModal">
- <div class="modal-content">
-  <h3>Admin Login</h3>
-  <input type="password" id="adminPass" placeholder="Password">
-  <button onclick="login()">Login</button>
- </div>
+<!-- =====================================================
+     COUNT
+===================================================== -->
+
+<div class="count-row">
+
+    <div class="count" id="count">
+        Loading projects...
+    </div>
+
 </div>
 
-<!-- DASHBOARD -->
-<div class="modal" id="dashboardModal">
- <div class="modal-content">
-  <h3>Admin Dashboard</h3>
-  <button onclick="openAdd()">➕ Add Project</button>
-  <button onclick="showManage()">✏️ Edit / Delete Projects</button>
-  <button onclick="logout()" style="background:#444">🚪 Logout</button>
- </div>
+
+
+<!-- =====================================================
+     PROJECTS
+===================================================== -->
+
+<div
+    class="projects"
+    id="projectList"
+>
+
+    <div class="loading">
+
+        <div class="loader"></div>
+
+        Loading student projects...
+
+    </div>
+
 </div>
 
-<!-- ADD / EDIT -->
-<div class="modal" id="adminModal">
- <div class="modal-content">
-  <h3 id="formTitle">Add Project</h3>
 
-  <input id="student" placeholder="Student Name">
-  <select id="course" onchange="loadSubtypes()"></select>
-  <select id="subtype"></select>
-  <input id="project" placeholder="Project Title">
-  <input id="projectLink" placeholder="Live Project URL">
 
-  <button onclick="saveProject()">Save</button>
- </div>
+<!-- =====================================================
+     LOGIN MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="loginModal"
+    onclick="closeOutside(event,'loginModal')"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>Admin Login</h3>
+
+                <p>
+                    Sign in to manage student projects
+                </p>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('loginModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                ADMIN PASSWORD
+            </label>
+
+            <input
+                type="password"
+                id="adminPass"
+                placeholder="Enter admin password"
+            >
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="login()"
+        >
+            🔐 Login
+        </button>
+
+    </div>
+
 </div>
+
+
+
+<!-- =====================================================
+     DASHBOARD MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="dashboardModal"
+    onclick="closeOutside(event,'dashboardModal')"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>Admin Dashboard</h3>
+
+                <p>
+                    Manage student projects
+                </p>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('dashboardModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="dashboard-buttons">
+
+            <button
+                class="dashboard-btn"
+                onclick="openAdd()"
+            >
+                ➕ &nbsp; Add New Project
+            </button>
+
+
+            <button
+                class="dashboard-btn"
+                onclick="showManage()"
+            >
+                ✏️ &nbsp; Edit / Delete Projects
+            </button>
+
+
+            <button
+                class="dashboard-btn danger"
+                onclick="logout()"
+            >
+                🚪 &nbsp; Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ADD / EDIT MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="adminModal"
+    onclick="closeOutside(event,'adminModal')"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3 id="formTitle">
+                    Add Project
+                </h3>
+
+                <p>
+                    Enter student project details
+                </p>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('adminModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                STUDENT NAME
+            </label>
+
+            <input
+                id="student"
+                placeholder="Enter student name"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                COURSE
+            </label>
+
+            <select
+                id="course"
+                onchange="loadSubtypes()"
+            ></select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                SPECIALIZATION / SUBTYPE
+            </label>
+
+            <select id="subtype"></select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                PROJECT TITLE
+            </label>
+
+            <input
+                id="project"
+                placeholder="Enter project title"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                LIVE PROJECT URL
+            </label>
+
+            <input
+                id="projectLink"
+                placeholder="https://example.com"
+            >
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="saveProject()"
+        >
+            💾 Save Project
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    © 2026
+    <strong>Disha Computer Institute</strong>
+    • Student Project Showcase
+
+</footer>
+
+
 
 <script>
-/* THEME */
+
+/* =========================================================
+   THEME
+========================================================= */
+
 function toggleTheme(){
- document.body.classList.toggle("light");
- localStorage.setItem("theme",
-  document.body.classList.contains("light")?"light":"dark");
+
+    document.body.classList.toggle("light");
+
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light")
+            ? "light"
+            : "dark"
+    );
 }
+
+
 if(localStorage.getItem("theme")==="light"){
- document.body.classList.add("light");
+
+    document.body.classList.add("light");
+
 }
 
-/* CONFIG */
-const API_URL="https://script.google.com/macros/s/AKfycbwYHntIvgXgRFT9DDSm9e75Ny3dZ7GgMJDirzjYmFaGmtAjIMFx8B7_lefEPBSpGsTG/exec";
-const ADMIN_PASSWORD="disha@123";
 
-const COURSES={
- "Tally Prime":["Accounting","GST","Payroll"],
- "Excel Master":["Basic","Advanced","Dashboard"],
- "Graphic Design":["Photoshop","CorelDraw","Illustrator","Canva"],
- "Web Development":["HTML","CSS","JavaScript","All Combined"],
- "Programming":["Java","Python","JavaScript","PHP","C","C++","C#"],
- "AutoCAD":["Civil","Mechanical","Electrical"],
- "Google SketchUp":["Interior","Exterior"],
- "Full Stack":["MERN","MEAN","Java Full Stack"],
- "Data Analyst":["Excel","Power BI","SQL","Python"],
- "MS Office":["Word","Excel","PowerPoint","Outlook"],
- "Digital Marketing":["SEO","Social Media","Google Ads"],
- "Video Editing":["Premiere Pro","After Effects","CapCut"]
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwYHntIvgXgRFT9DDSm9e75Ny3dZ7GgMJDirzjYmFaGmtAjIMFx8B7_lefEPBSpGsTG/exec";
+
+
+const ADMIN_PASSWORD =
+"disha@123";
+
+
+
+/* =========================================================
+   COURSES
+========================================================= */
+
+const COURSES = {
+
+    "Tally Prime":[
+        "Accounting",
+        "GST",
+        "Payroll"
+    ],
+
+    "Excel Master":[
+        "Basic",
+        "Advanced",
+        "Dashboard"
+    ],
+
+    "Graphic Design":[
+        "Photoshop",
+        "CorelDraw",
+        "Illustrator",
+        "Canva"
+    ],
+
+    "Web Development":[
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "All Combined"
+    ],
+
+    "Programming":[
+        "Java",
+        "Python",
+        "JavaScript",
+        "PHP",
+        "C",
+        "C++",
+        "C#"
+    ],
+
+    "AutoCAD":[
+        "Civil",
+        "Mechanical",
+        "Electrical"
+    ],
+
+    "Google SketchUp":[
+        "Interior",
+        "Exterior"
+    ],
+
+    "Full Stack":[
+        "MERN",
+        "MEAN",
+        "Java Full Stack"
+    ],
+
+    "Data Analyst":[
+        "Excel",
+        "Power BI",
+        "SQL",
+        "Python"
+    ],
+
+    "MS Office":[
+        "Word",
+        "Excel",
+        "PowerPoint",
+        "Outlook"
+    ],
+
+    "Digital Marketing":[
+        "SEO",
+        "Social Media",
+        "Google Ads"
+    ],
+
+    "Video Editing":[
+        "Premiere Pro",
+        "After Effects",
+        "CapCut"
+    ]
+
 };
 
-let projects=[], editId=null, isAdmin=false;
 
-/* LOAD DROPDOWNS */
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let projects = [];
+
+let editId = null;
+
+let isAdmin = false;
+
+
+
+/* =========================================================
+   DOM REFERENCES
+========================================================= */
+
+const search =
+document.getElementById("search");
+
+const courseFilter =
+document.getElementById("courseFilter");
+
+const sort =
+document.getElementById("sort");
+
+const projectList =
+document.getElementById("projectList");
+
+const count =
+document.getElementById("count");
+
+const loginModal =
+document.getElementById("loginModal");
+
+const dashboardModal =
+document.getElementById("dashboardModal");
+
+const adminModal =
+document.getElementById("adminModal");
+
+const adminPass =
+document.getElementById("adminPass");
+
+const student =
+document.getElementById("student");
+
+const course =
+document.getElementById("course");
+
+const subtype =
+document.getElementById("subtype");
+
+const project =
+document.getElementById("project");
+
+const projectLink =
+document.getElementById("projectLink");
+
+const formTitle =
+document.getElementById("formTitle");
+
+
+
+/* =========================================================
+   LOAD DROPDOWNS
+========================================================= */
+
 for(let c in COURSES){
- course.innerHTML+=`<option>${c}</option>`;
- courseFilter.innerHTML+=`<option>${c}</option>`;
+
+    const option1 =
+    document.createElement("option");
+
+    option1.value = c;
+    option1.textContent = c;
+
+    course.appendChild(option1);
+
+
+    const option2 =
+    document.createElement("option");
+
+    option2.value = c;
+    option2.textContent = c;
+
+    courseFilter.appendChild(option2);
+
 }
+
 loadSubtypes();
 
-/* FETCH */
+
+
+/* =========================================================
+   FETCH PROJECTS
+========================================================= */
+
 function loadProjects(){
- fetch(API_URL).then(r=>r.json()).then(d=>{
-  projects=d;
-  render();
- });
+
+    projectList.innerHTML = `
+        <div class="loading">
+            <div class="loader"></div>
+            Loading student projects...
+        </div>
+    `;
+
+    fetch(API_URL)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        projects = data || [];
+
+        render();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        projectList.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Unable to Load Projects
+                </h3>
+
+                <p>
+                    Please refresh the page and try again.
+                </p>
+
+            </div>
+
+        `;
+
+        count.innerText =
+            "Unable to load projects";
+
+    });
+
 }
+
 loadProjects();
 
-/* RENDER */
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
 function render(){
- projectList.innerHTML="";
- let q=search.value.toLowerCase();
- let cf=courseFilter.value;
- let list=[...projects];
 
- if(sort.value==="az"){
-  list.sort((a,b)=>a.project.localeCompare(b.project));
- }else{
-  list.sort((a,b)=>b.id-a.id);
- }
+    projectList.innerHTML = "";
 
- let filtered=list.filter(p=>
-  (p.student.toLowerCase().includes(q) ||
-   p.project.toLowerCase().includes(q)) &&
-  (cf==="all" || p.course===cf)
- );
+    const q =
+        search.value
+        .trim()
+        .toLowerCase();
 
- count.innerText=`Showing ${filtered.length} project(s)`;
+    const cf =
+        courseFilter.value;
 
- filtered.forEach(p=>{
-  projectList.innerHTML+=`
-   <div class="card">
-    <h3>${p.project}</h3>
-    <div class="meta">${p.student}</div>
-    <div class="meta">${p.course} • ${p.subtype}</div>
+    let list =
+        [...projects];
 
-    <a class="btn" href="${p.projectLink}" target="_blank">View Project</a>
 
-    ${isAdmin?`
-     <div>
-      <a class="btn secondary" onclick="editProject(${p.id})">Edit</a>
-      <a class="btn secondary" onclick="deleteProject(${p.id})">Delete</a>
-     </div>`:""}
-   </div>`;
- });
+    /* SORT */
+
+    if(sort.value === "az"){
+
+        list.sort((a,b) =>
+            String(a.project || "")
+            .localeCompare(
+                String(b.project || "")
+            )
+        );
+
+    }else{
+
+        list.sort((a,b) =>
+            Number(b.id || 0) -
+            Number(a.id || 0)
+        );
+
+    }
+
+
+    /* FILTER */
+
+    const filtered =
+    list.filter(p => {
+
+        const studentName =
+            String(p.student || "")
+            .toLowerCase();
+
+        const projectName =
+            String(p.project || "")
+            .toLowerCase();
+
+        return (
+
+            (
+                studentName.includes(q) ||
+                projectName.includes(q)
+            )
+
+            &&
+
+            (
+                cf === "all" ||
+                p.course === cf
+            )
+
+        );
+
+    });
+
+
+    count.innerHTML =
+        `Showing <strong>${filtered.length}</strong> project(s)`;
+
+
+    /* EMPTY */
+
+    if(filtered.length === 0){
+
+        projectList.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    No Projects Found
+                </h3>
+
+                <p>
+                    Try changing your search or course filter.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* CARDS */
+
+    filtered.forEach((p,index) => {
+
+        const card =
+        document.createElement("div");
+
+        card.className = "card";
+
+        card.style.animationDelay =
+            `${Math.min(index * 0.05,0.5)}s`;
+
+
+        const projectTitle =
+            escapeHTML(p.project || "Untitled Project");
+
+        const studentName =
+            escapeHTML(p.student || "Student");
+
+        const courseName =
+            escapeHTML(p.course || "Course");
+
+        const subtypeName =
+            escapeHTML(p.subtype || "General");
+
+
+        card.innerHTML = `
+
+            <div class="card-top">
+
+                <div class="project-number">
+                    ${String(index + 1).padStart(2,"0")}
+                </div>
+
+                <div class="course-badge">
+                    ${courseName}
+                </div>
+
+            </div>
+
+
+            <h3>
+                ${projectTitle}
+            </h3>
+
+
+            <div class="student-name">
+
+                <span>●</span>
+
+                ${studentName}
+
+            </div>
+
+
+            <div class="meta">
+
+                ${courseName}
+                &nbsp;•&nbsp;
+                ${subtypeName}
+
+            </div>
+
+
+            <div class="card-footer">
+
+                <a
+                    class="view-btn"
+                    href="${escapeAttribute(p.projectLink || "#")}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    View Project ↗
+                </a>
+
+
+                ${
+                    isAdmin
+                    ?
+
+                    `
+                    <div class="admin-actions">
+
+                        <button
+                            class="small-btn"
+                            onclick="editProject(${Number(p.id)})"
+                            title="Edit"
+                        >
+                            ✏️
+                        </button>
+
+                        <button
+                            class="small-btn"
+                            onclick="deleteProject(${Number(p.id)})"
+                            title="Delete"
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+                    `
+
+                    :
+
+                    ""
+                }
+
+            </div>
+
+        `;
+
+
+        projectList.appendChild(card);
+
+    });
+
 }
-search.oninput=courseFilter.onchange=sort.onchange=render;
 
-/* LOGIN */
-function openLogin(){loginModal.style.display="flex"}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return String(value)
+        .replace(/"/g,"%22")
+        .replace(/</g,"%3C")
+        .replace(/>/g,"%3E");
+}
+
+
+
+/* =========================================================
+   SEARCH / FILTER / SORT
+========================================================= */
+
+search.addEventListener(
+    "input",
+    render
+);
+
+courseFilter.addEventListener(
+    "change",
+    render
+);
+
+sort.addEventListener(
+    "change",
+    render
+);
+
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function openLogin(){
+
+    loginModal.style.display = "flex";
+
+    setTimeout(() => {
+
+        adminPass.focus();
+
+    },100);
+
+}
+
+
 function login(){
- if(adminPass.value===ADMIN_PASSWORD){
-  isAdmin=true;
-  loginModal.style.display="none";
-  dashboardModal.style.display="flex";
-  render();
- }else alert("Wrong password");
+
+    if(adminPass.value === ADMIN_PASSWORD){
+
+        isAdmin = true;
+
+        adminPass.value = "";
+
+        loginModal.style.display = "none";
+
+        dashboardModal.style.display = "flex";
+
+        render();
+
+    }else{
+
+        alert("Wrong password");
+
+        adminPass.focus();
+
+    }
+
 }
 
-/* DASHBOARD */
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
 function openAdd(){
- editId=null;
- formTitle.innerText="Add Project";
- student.value=project.value=projectLink.value="";
- dashboardModal.style.display="none";
- adminModal.style.display="flex";
+
+    editId = null;
+
+    formTitle.innerText =
+        "Add Project";
+
+    student.value = "";
+
+    project.value = "";
+
+    projectLink.value = "";
+
+    course.selectedIndex = 0;
+
+    loadSubtypes();
+
+    dashboardModal.style.display =
+        "none";
+
+    adminModal.style.display =
+        "flex";
+
 }
+
+
 function showManage(){
- dashboardModal.style.display="none";
- render();
+
+    dashboardModal.style.display =
+        "none";
+
+    render();
+
 }
+
+
 function logout(){
- isAdmin=false;
- dashboardModal.style.display="none";
- render();
+
+    isAdmin = false;
+
+    dashboardModal.style.display =
+        "none";
+
+    render();
+
 }
 
-/* SUBTYPES */
+
+
+/* =========================================================
+   SUBTYPES
+========================================================= */
+
 function loadSubtypes(){
- subtype.innerHTML="";
- COURSES[course.value]?.forEach(s=>{
-  subtype.innerHTML+=`<option>${s}</option>`;
- });
+
+    subtype.innerHTML = "";
+
+    const selectedCourse =
+        course.value;
+
+    if(!COURSES[selectedCourse]){
+        return;
+    }
+
+
+    COURSES[selectedCourse]
+        .forEach(s => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = s;
+
+            option.textContent = s;
+
+            subtype.appendChild(option);
+
+        });
+
 }
 
-/* SAVE */
+
+
+/* =========================================================
+   SAVE PROJECT
+========================================================= */
+
 function saveProject(){
- fetch(API_URL,{
-  method:"POST",
-  body:JSON.stringify({
-   action:editId?"update":"create",
-   id:editId,
-   student:student.value,
-   course:course.value,
-   subtype:subtype.value,
-   project:project.value,
-   projectLink:projectLink.value
-  })
- }).then(()=>{adminModal.style.display="none";loadProjects()});
+
+    if(!student.value.trim()){
+
+        alert("Please enter student name");
+
+        student.focus();
+
+        return;
+
+    }
+
+
+    if(!project.value.trim()){
+
+        alert("Please enter project title");
+
+        project.focus();
+
+        return;
+
+    }
+
+
+    fetch(API_URL,{
+
+        method:"POST",
+
+        body:JSON.stringify({
+
+            action:
+                editId
+                ? "update"
+                : "create",
+
+            id:editId,
+
+            student:
+                student.value,
+
+            course:
+                course.value,
+
+            subtype:
+                subtype.value,
+
+            project:
+                project.value,
+
+            projectLink:
+                projectLink.value
+
+        })
+
+    })
+
+    .then(() => {
+
+        adminModal.style.display =
+            "none";
+
+        loadProjects();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong while saving the project."
+        );
+
+    });
+
 }
 
-/* EDIT */
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
 function editProject(id){
- const p=projects.find(x=>x.id==id);
- editId=id;
- student.value=p.student;
- course.value=p.course;
- loadSubtypes();
- subtype.value=p.subtype;
- project.value=p.project;
- projectLink.value=p.projectLink;
- formTitle.innerText="Edit Project";
- adminModal.style.display="flex";
+
+    const p =
+        projects.find(
+            x => x.id == id
+        );
+
+    if(!p){
+        return;
+    }
+
+
+    editId = id;
+
+    student.value =
+        p.student || "";
+
+    course.value =
+        p.course || "";
+
+    loadSubtypes();
+
+    subtype.value =
+        p.subtype || "";
+
+    project.value =
+        p.project || "";
+
+    projectLink.value =
+        p.projectLink || "";
+
+    formTitle.innerText =
+        "Edit Project";
+
+    adminModal.style.display =
+        "flex";
+
 }
 
-/* DELETE */
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
 function deleteProject(id){
- if(!confirm("Delete this project?")) return;
- fetch(API_URL,{method:"POST",body:JSON.stringify({action:"delete",id})})
- .then(loadProjects);
+
+    if(!confirm(
+        "Delete this project?"
+    )){
+        return;
+    }
+
+
+    fetch(API_URL,{
+
+        method:"POST",
+
+        body:JSON.stringify({
+
+            action:"delete",
+
+            id:id
+
+        })
+
+    })
+
+    .then(loadProjects)
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Unable to delete project."
+        );
+
+    });
+
 }
+
+
+
+/* =========================================================
+   MODAL HELPERS
+========================================================= */
+
+function closeModal(id){
+
+    document.getElementById(id)
+        .style.display = "none";
+
+}
+
+
+function closeOutside(event,id){
+
+    if(event.target.id === id){
+
+        closeModal(id);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            loginModal.style.display =
+                "none";
+
+            dashboardModal.style.display =
+                "none";
+
+            adminModal.style.display =
+                "none";
+
+        }
+
+
+        if(
+            event.key === "Enter" &&
+            document.activeElement === adminPass
+        ){
+
+            login();
+
+        }
+
+    }
+);
+
 </script>
 
 </body>
 </html>
+```
